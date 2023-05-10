@@ -39,5 +39,34 @@
 width="6" 
      height="8" />
         
+        <button onclick="playVideo()">E</button>
+  <div id="player"></div>
+
+  <script src="https://www.youtube.com/iframe_api"></script>
+  <script>
+    var player;
+
+    function onYouTubeIframeAPIReady() {
+      player = new YT.Player('player', {
+        height: '360',
+        width: '640',
+        videoId: 'm5zi9tKD81U', // Replace 'VIDEO_ID' with the actual YouTube video ID
+        playerVars: {
+          autoplay: 1,       // Set to 1 for autoplay
+          controls: 0,       // Set to 0 to hide controls
+          modestbranding: 1, // Set to 1 to hide YouTube logo
+          rel: 0,            // Set to 0 to hide related videos at the end
+          showinfo: 0,       // Set to 0 to hide video title and uploader info
+          iv_load_policy: 3, // Set to 1 to show annotations
+          disablekb: 1       // Set to 1 to disable keyboard controls
+        }
+      });
+    }
+
+    function playVideo() {
+      player.playVideo();
+    }
+  </script>
+        
 </body>
 </html>
