@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta property="og:title" content="LylaNodes is Terrible">
+    <meta property="og:description" content="This page exposes the truth about LylaNodes. (WIP)">
+    <title>Expose Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background: url('background.png') no-repeat center center fixed;
+            background-size: cover;
+            color: white;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        .typing-text {
+            font-size: 2em;
+            font-weight: bold;
+            margin-bottom: 20px;
+            height: 50px;
+        }
+        .images-container {
+            display: flex;
+            justify-content: space-around;
+            width: 80%;
+            margin-bottom: 40px;
+        }
+        .image-box {
+            text-align: center;
+            width: 45%;
+            max-width: 300px;
+        }
+        .image-box img {
+            width: 100%;
+            height: auto;
+        }
+        .description {
+            color: lightgray;
+            font-size: 0.9em;
+            margin: 10px 0;
+        }
+        .button-container {
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+        .button {
+            display: inline-block;
+            padding: 15px 30px;
+            margin: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+            background: linear-gradient(45deg, #ff6b6b, #f0e130, #6bff6b, #6b6bff);
+            background-size: 400%;
+            animation: rainbow 5s ease infinite;
+            color: white;
+            text-decoration: none;
+        }
+        @keyframes rainbow {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        @keyframes typingColor {
+            0% { color: #ff6b6b; }
+            25% { color: #f0e130; }
+            50% { color: #6bff6b; }
+            75% { color: #6b6bff; }
+            100% { color: #ff6b6b; }
+        }
+    </style>
+</head>
+<body>
+    <div class="typing-text" id="typing-text"></div>
+
+    <div class="images-container">
+        <div class="image-box">
+            <img src="image1.png" alt="Image 1">
+            <div class="description">Recently, We have been nuked by someone to which one staff claims it was TheKraters. We have nuked not only once, but TWICE! The image only shows the first raid. Ths second isnt taken due to being late.</div>
+        </div>
+        <div class="image-box">
+            <img src="image2.png" alt="Image 2">
+            <div class="description">No Images for now.</div>
+        </div>
+    </div>
+
+    <div class="button-container">
+        <a href="web/proof.html" class="button">More Proof</a>
+        <a href="web/ssp.html" class="button">SecureShield Premium</a>
+    </div>
+    <div class="button-container">
+        <a href="web/raid.html" class="button">Raids</a>
+    </div>
+
+    <script>
+        const textElement = document.getElementById("typing-text");
+        const text = "(Web WIP) LylaNodes is terrible";
+        let index = 0;
+        let isErasing = false;
+
+        function type() {
+            textElement.style.animation = "typingColor 2s infinite";
+            if (isErasing) {
+                if (index === 0) {
+                    isErasing = false;
+                    setTimeout(type, 500);
+                } else {
+                    textElement.innerHTML = text.substring(0, index - 1);
+                    index--;
+                    setTimeout(type, 100);
+                }
+            } else {
+                if (index === text.length) {
+                    isErasing = true;
+                    setTimeout(type, 1000);
+                } else {
+                    textElement.innerHTML = text.substring(0, index + 1);
+                    index++;
+                    setTimeout(type, 200);
+                }
+            }
+        }
+
+        document.addEventListener("DOMContentLoaded", function() {
+            type();
+        });
+    </script>
+</body>
+</html>
