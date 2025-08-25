@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+    }
+    
+    #video-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 9999;
+    }
+  </style>
+</head>
+<body>
+  <div id="video-container"></div>
+
+  <script>
+    // Replace 'VIDEO_ID' with the actual YouTube video ID
+    var videoId = 'm5zi9tKD81U';
+
+    // Create the YouTube player
+    var player;
+    function onYouTubeIframeAPIReady() {
+      player = new YT.Player('video-container', {
+        videoId: videoId,
+        playerVars: {
+          autoplay: 1,            // Autoplay the video
+          controls: 0,            // Hide video controls
+          modestbranding: 1,      // Hide YouTube logo
+          rel: 0,                 // Don't show related videos at the end
+          showinfo: 0,            // Hide video title and uploader info
+          iv_load_policy: 3,      // Hide annotations
+          disablekb: 1            // Disable keyboard controls
+        },
+        events: {
+          onReady: onPlayerReady,
+          onStateChange: onPlayerStateChange
+        }
+      });
+    }
+
+    function onPlayerReady(event) {
+      // Start the video in fullscreen
+      event.target.playVideo();
+      event.target.setPlaybackQuality('hd720');
+      event.target.mute();    // Mute the video
+    }
+
+    function onPlayerStateChange(event) {
+      // Disable seeking and pause functionality
+      if (event.data == YT.PlayerState.PAUSED || event.data == YT.PlayerState.BUFFERING) {
+        event.target.playVideo();
+      }
+    }
+  </script>
+
+  <script src="https://www.youtube.com/iframe_api"></script>
+</body>
+</html>
