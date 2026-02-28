@@ -41,7 +41,7 @@
             line-height: 1.6;
         }
 
-        /* Animated background grid */
+        /* Animated background grid - optimized */
         .bg-grid {
             position: fixed;
             top: 0;
@@ -54,8 +54,9 @@
                 linear-gradient(0deg, transparent 24%, rgba(0, 217, 255, 0.05) 25%, rgba(0, 217, 255, 0.05) 26%, transparent 27%, transparent 74%, rgba(0, 217, 255, 0.05) 75%, rgba(0, 217, 255, 0.05) 76%, transparent 77%, transparent),
                 linear-gradient(90deg, transparent 24%, rgba(0, 217, 255, 0.05) 25%, rgba(0, 217, 255, 0.05) 26%, transparent 27%, transparent 74%, rgba(0, 217, 255, 0.05) 75%, rgba(0, 217, 255, 0.05) 76%, transparent 77%, transparent);
             background-size: 50px 50px;
-            opacity: 0.4;
-            animation: gridShift 20s linear infinite;
+            opacity: 0.3;
+            will-change: transform;
+            animation: gridShift 30s linear infinite;
         }
 
         @keyframes gridShift {
@@ -67,14 +68,15 @@
             }
         }
 
-        /* Animated blobs */
+        /* Animated blobs - optimized */
         .blob {
             position: absolute;
-            opacity: 0.15;
+            opacity: 0.12;
             mix-blend-mode: screen;
             border-radius: 50%;
             filter: blur(80px);
             z-index: 0;
+            will-change: transform;
         }
 
         .blob-1 {
@@ -83,7 +85,7 @@
             background: var(--primary);
             top: -250px;
             left: -250px;
-            animation: blobFloat 15s ease-in-out infinite;
+            animation: blobFloat 18s ease-in-out infinite;
         }
 
         .blob-2 {
@@ -92,7 +94,7 @@
             background: var(--secondary);
             bottom: -200px;
             right: -200px;
-            animation: blobFloat 18s ease-in-out infinite reverse;
+            animation: blobFloat 22s ease-in-out infinite reverse;
         }
 
         .blob-3 {
@@ -101,7 +103,7 @@
             background: var(--accent);
             top: 50%;
             left: 10%;
-            animation: blobFloat 20s ease-in-out infinite;
+            animation: blobFloat 25s ease-in-out infinite;
         }
 
         @keyframes blobFloat {
@@ -145,8 +147,9 @@
             background: linear-gradient(135deg, var(--primary), var(--secondary));
             padding: 4px;
             box-shadow: 0 10px 30px rgba(0, 217, 255, 0.2);
-            animation: profileSpin 4s linear infinite;
             position: relative;
+            will-change: transform;
+            animation: profileSpin 5s linear infinite;
         }
 
         .profile-pic img {
@@ -233,11 +236,10 @@
 
         .section {
             background: rgba(26, 31, 58, 0.6);
-            backdrop-filter: blur(20px);
             border: 2px solid rgba(0, 217, 255, 0.2);
             border-radius: 16px;
             padding: 40px;
-            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            transition: all 0.3s ease;
             position: relative;
             overflow: hidden;
             animation: sectionFadeIn 0.8s ease-out forwards;
@@ -246,8 +248,8 @@
         .section:hover {
             border-color: rgba(0, 217, 255, 0.5);
             background: rgba(26, 31, 58, 0.9);
-            transform: translateY(-8px);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            transform: translateY(-4px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
         }
 
         .section:nth-child(1) {
@@ -283,7 +285,7 @@
         .section-icon {
             font-size: 1.6em;
             display: inline-block;
-            animation: iconBounce 2s ease-in-out infinite;
+            animation: iconBounce 2.5s ease-in-out infinite;
         }
 
         @keyframes iconBounce {
@@ -291,7 +293,7 @@
                 transform: translateY(0);
             }
             50% {
-                transform: translateY(-5px);
+                transform: translateY(-4px);
             }
         }
 
@@ -318,7 +320,7 @@
             color: var(--text-muted);
             position: relative;
             font-size: 1.05em;
-            transition: all 0.3s ease;
+            transition: all 0.2s ease;
         }
 
         .hobbies-list li:last-child {
@@ -336,8 +338,7 @@
 
         .hobbies-list li:hover {
             color: var(--text);
-            padding-left: 45px;
-            text-shadow: 0 0 20px rgba(0, 217, 255, 0.3);
+            padding-left: 40px;
         }
 
         /* Social Links */
@@ -357,7 +358,7 @@
             border-radius: 12px;
             font-weight: 600;
             font-size: 1em;
-            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            transition: all 0.25s ease;
             cursor: pointer;
             text-align: center;
             position: relative;
@@ -369,8 +370,8 @@
             background: linear-gradient(135deg, var(--primary), var(--accent));
             color: var(--dark);
             border-color: var(--primary);
-            transform: translateY(-4px);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
         }
 
         .social-btn.secondary {
@@ -383,14 +384,13 @@
             background: linear-gradient(135deg, var(--secondary), var(--accent));
             color: white;
             border-color: var(--secondary);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
         }
 
         /* Quote Section */
         .quote-section {
             grid-column: 1 / -1;
             background: linear-gradient(135deg, rgba(131, 56, 236, 0.1), rgba(255, 0, 110, 0.05));
-            backdrop-filter: blur(20px);
             border: 2px solid rgba(131, 56, 236, 0.3);
             border-radius: 16px;
             padding: 45px;
@@ -450,7 +450,7 @@
             text-align: center;
             font-weight: 600;
             color: var(--primary);
-            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            transition: all 0.25s ease;
             cursor: default;
             position: relative;
             overflow: hidden;
@@ -459,12 +459,12 @@
         .tech-item:hover {
             background: linear-gradient(135deg, rgba(0, 217, 255, 0.2), rgba(131, 56, 236, 0.15));
             border-color: rgba(0, 217, 255, 0.6);
-            transform: translateY(-6px);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
             color: var(--text);
         }
 
-        /* Easter egg */
+        /* shit */
         .easter-egg {
             position: fixed;
             bottom: 30px;
@@ -478,19 +478,20 @@
             align-items: center;
             justify-content: center;
             font-size: 1.8em;
-            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            transition: all 0.2s ease;
             z-index: 100;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
             border: 2px solid rgba(255, 255, 255, 0.2);
+            will-change: transform;
         }
 
         .easter-egg:hover {
-            transform: scale(1.15) rotate(10deg);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+            transform: scale(1.1);
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.25);
         }
 
         .easter-egg:active {
-            transform: scale(0.95) rotate(-10deg);
+            transform: scale(0.95);
         }
 
         /* Notification */
@@ -504,11 +505,11 @@
             border-radius: 10px;
             font-weight: 600;
             opacity: 0;
-            transition: opacity 0.3s ease;
+            transition: opacity 0.25s ease;
             pointer-events: none;
             z-index: 99;
             font-family: 'Space Mono', monospace;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
         }
 
         .notification.show {
@@ -519,12 +520,12 @@
         /* Responsive */
         @media (max-width: 768px) {
             .container {
-                padding: 50px 20px;
+                padding: 40px 20px;
             }
 
             .content {
                 grid-template-columns: 1fr;
-                gap: 25px;
+                gap: 20px;
             }
 
             h1 {
@@ -546,16 +547,16 @@
             }
 
             .section {
-                padding: 30px;
+                padding: 25px 20px;
             }
 
             .tech-grid {
-                grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+                grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
             }
 
             .sarcasm-box {
                 font-size: 1em;
-                padding: 20px 25px;
+                padding: 18px 22px;
             }
 
             .easter-egg {
@@ -567,27 +568,89 @@
             }
 
             .notification {
-                bottom: 90px;
+                bottom: 85px;
                 right: 20px;
                 font-size: 0.9em;
+                padding: 14px 20px;
+            }
+
+            /* disable some animations on mobile */
+            .bg-grid {
+                animation: none;
+                opacity: 0.15;
+            }
+
+            .profile-pic {
+                animation: none;
+            }
+
+            .section-icon {
+                animation: none;
+            }
+
+            header {
+                margin-bottom: 60px;
             }
         }
 
         @media (max-width: 480px) {
+            .container {
+                padding: 30px 15px;
+            }
+
             h1 {
                 font-size: 1.8em;
+                margin-bottom: 10px;
+            }
+
+            .tagline {
+                font-size: 1em;
+                margin-bottom: 15px;
             }
 
             .section h2 {
                 font-size: 1.3em;
+                margin-bottom: 15px;
+            }
+
+            .section {
+                padding: 20px 15px;
             }
 
             .socials {
                 flex-direction: column;
+                gap: 10px;
             }
 
             .tech-grid {
                 grid-template-columns: repeat(2, 1fr);
+                gap: 12px;
+            }
+
+            .tech-item {
+                padding: 18px;
+                font-size: 0.95em;
+            }
+
+            .sarcasm-box {
+                font-size: 0.95em;
+                padding: 15px 18px;
+            }
+
+            .quote {
+                font-size: 1.1em;
+            }
+
+            header {
+                margin-bottom: 40px;
+            }
+        }
+
+        /* Disable animations for users who prefer reduced motion */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation: none !important;
+                transition: none !important;
             }
         }
     </style>
@@ -641,7 +704,7 @@
                 </ul>
             </div>
 
-            <!-- Quote Section -->
+            <!-- quote section -->
             <div class="quote-section">
                 <p class="quote">
                     sometimes bro u gotta lock in, trust me.
@@ -649,7 +712,7 @@
                 <p class="quote-author">~ revx155</p>
             </div>
 
-            <!-- Tech Stack -->
+            <!-- tech stack which im clearly bad at -->
             <div class="section stack">
                 <h2><span class="section-icon">⚙️</span>Currently Working With</h2>
                 <div class="tech-grid">
@@ -663,12 +726,16 @@
         </div>
     </div>
 
-    <!-- Easter Egg -->
+    <!-- some stuff here and and and idk -->
     <div class="easter-egg" id="easterEgg">🐱</div>
     <div class="notification" id="notification"></div>
 
     <script>
-        // Easter egg interaction
+        // mobile get less free will
+        const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+        const isTablet = window.innerWidth <= 1024 && window.innerWidth > 480;
+
+        // secret
         const easterEgg = document.getElementById('easterEgg');
         const notification = document.getElementById('notification');
         let clicks = 0;
@@ -683,7 +750,8 @@
             "i respect the dedication ngl",
             "whats the point of doing this",
             "this is awkward now...",
-            "okay seriously now go touch grass"
+            "okay seriously now go touch grass",
+            "ok what now"
         ];
 
         easterEgg.addEventListener('click', (e) => {
@@ -691,42 +759,62 @@
             if (clicks <= messages.length) {
                 notification.textContent = messages[clicks - 1];
                 notification.classList.add('show');
-                easterEgg.style.transform = `rotate(${clicks * 30}deg) scale(${1 + clicks * 0.03})`;
+                
+                // simple scale animation instead of rotate for performance
+                easterEgg.style.transform = `scale(${1 + clicks * 0.02})`;
                 
                 setTimeout(() => {
                     notification.classList.remove('show');
-                }, 3000);
+                }, 2500);
 
-                createClickParticles(e.clientX, e.clientY);
+                if (!isMobile && !isTablet) {
+                    createClickParticles(e.clientX, e.clientY);
+                }
             }
         });
 
-        // weird blob
-        const blobs = document.querySelectorAll('.blob');
-        document.addEventListener('mousemove', (e) => {
-            blobs.forEach((blob, index) => {
-                const speed = (index + 1) * 80;
-                blob.style.transform = `translate(${e.clientX / speed}px, ${e.clientY / speed}px)`;
+        // blob interaction (disabled on mobile)
+        if (!isMobile && !isTablet) {
+            let lastX = 0;
+            let lastY = 0;
+            let ticking = false;
+            const blobs = document.querySelectorAll('.blob');
+
+            document.addEventListener('mousemove', (e) => {
+                lastX = e.clientX;
+                lastY = e.clientY;
+                
+                if (!ticking) {
+                    window.requestAnimationFrame(() => {
+                        blobs.forEach((blob, index) => {
+                            const speed = (index + 1) * 100;
+                            blob.style.transform = `translate(${lastX / speed}px, ${lastY / speed}px)`;
+                        });
+                        ticking = false;
+                    });
+                    ticking = true;
+                }
             });
-        });
+        }
 
         // click particles
         function createClickParticles(x, y) {
-            for (let i = 0; i < 5; i++) {
+            const particleCount = 3; // reduced from 5 for performance
+            for (let i = 0; i < particleCount; i++) {
                 const particle = document.createElement('div');
                 particle.style.position = 'fixed';
                 particle.style.left = x + 'px';
                 particle.style.top = y + 'px';
-                particle.style.width = '10px';
-                particle.style.height = '10px';
+                particle.style.width = '8px';
+                particle.style.height = '8px';
                 particle.style.background = ['#00d9ff', '#ff006e', '#8338ec'][Math.floor(Math.random() * 3)];
                 particle.style.borderRadius = '50%';
                 particle.style.pointerEvents = 'none';
                 particle.style.zIndex = '99';
                 document.body.appendChild(particle);
 
-                const angle = (Math.PI * 2 * i) / 5;
-                const velocity = 3 + Math.random() * 3;
+                const angle = (Math.PI * 2 * i) / particleCount;
+                const velocity = 2.5 + Math.random() * 2;
                 const vx = Math.cos(angle) * velocity;
                 const vy = Math.sin(angle) * velocity;
                 let px = x;
@@ -734,7 +822,7 @@
                 let life = 1;
 
                 const animate = () => {
-                    life -= 0.02;
+                    life -= 0.03;
                     px += vx;
                     py += vy;
                     particle.style.left = px + 'px';
@@ -751,25 +839,14 @@
             }
         }
 
-        // smooth scroll because why not
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({ behavior: 'smooth' });
-                }
-            });
-        });
-
-        // extra
+        // wow
         easterEgg.addEventListener('contextmenu', (e) => {
             e.preventDefault();
             notification.textContent = "right click? really? you're bold.";
             notification.classList.add('show');
             setTimeout(() => {
                 notification.classList.remove('show');
-            }, 2000);
+            }, 1800);
         });
     </script>
 </body>
