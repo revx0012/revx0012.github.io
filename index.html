@@ -1,87 +1,776 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title> </title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>revx155 - code. animate. goof.</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #00d9ff;
+            --secondary: #ff006e;
+            --accent: #8338ec;
+            --dark: #0a0e27;
+            --darker: #050812;
+            --surface: #1a1f3a;
+            --surface-light: #252d4a;
+            --text: #f0f3ff;
+            --text-muted: #a8adc5;
+            --success: #06ffa5;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            background: linear-gradient(135deg, var(--darker) 0%, var(--dark) 50%, #0f1527 100%);
+            color: var(--text);
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* Animated background grid */
+        .bg-grid {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+            background-image: 
+                linear-gradient(0deg, transparent 24%, rgba(0, 217, 255, 0.05) 25%, rgba(0, 217, 255, 0.05) 26%, transparent 27%, transparent 74%, rgba(0, 217, 255, 0.05) 75%, rgba(0, 217, 255, 0.05) 76%, transparent 77%, transparent),
+                linear-gradient(90deg, transparent 24%, rgba(0, 217, 255, 0.05) 25%, rgba(0, 217, 255, 0.05) 26%, transparent 27%, transparent 74%, rgba(0, 217, 255, 0.05) 75%, rgba(0, 217, 255, 0.05) 76%, transparent 77%, transparent);
+            background-size: 50px 50px;
+            opacity: 0.4;
+            animation: gridShift 20s linear infinite;
+        }
+
+        @keyframes gridShift {
+            0% {
+                transform: translateY(0);
+            }
+            100% {
+                transform: translateY(50px);
+            }
+        }
+
+        /* Animated blobs */
+        .blob {
+            position: absolute;
+            opacity: 0.15;
+            mix-blend-mode: screen;
+            border-radius: 50%;
+            filter: blur(80px);
+            z-index: 0;
+        }
+
+        .blob-1 {
+            width: 500px;
+            height: 500px;
+            background: var(--primary);
+            top: -250px;
+            left: -250px;
+            animation: blobFloat 15s ease-in-out infinite;
+        }
+
+        .blob-2 {
+            width: 400px;
+            height: 400px;
+            background: var(--secondary);
+            bottom: -200px;
+            right: -200px;
+            animation: blobFloat 18s ease-in-out infinite reverse;
+        }
+
+        .blob-3 {
+            width: 350px;
+            height: 350px;
+            background: var(--accent);
+            top: 50%;
+            left: 10%;
+            animation: blobFloat 20s ease-in-out infinite;
+        }
+
+        @keyframes blobFloat {
+            0%, 100% {
+                transform: translate(0, 0);
+            }
+            33% {
+                transform: translate(30px, -50px);
+            }
+            66% {
+                transform: translate(-20px, 30px);
+            }
+        }
+
+        .container {
+            position: relative;
+            z-index: 1;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 80px 30px;
+        }
+
+        /* Header */
+        header {
+            text-align: center;
+            margin-bottom: 100px;
+            animation: headerFadeIn 0.8s ease-out;
+        }
+
+        .profile-wrapper {
+            position: relative;
+            width: 160px;
+            height: 160px;
+            margin: 0 auto 40px;
+        }
+
+        .profile-pic {
+            width: 160px;
+            height: 160px;
+            border-radius: 20px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            padding: 4px;
+            box-shadow: 0 10px 30px rgba(0, 217, 255, 0.2);
+            animation: profileSpin 4s linear infinite;
+            position: relative;
+        }
+
+        .profile-pic img {
+            width: 100%;
+            height: 100%;
+            border-radius: 16px;
+            object-fit: cover;
+            display: block;
+        }
+
+        @keyframes profileSpin {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        h1 {
+            font-size: 4em;
+            font-weight: 700;
+            margin-bottom: 15px;
+            letter-spacing: -2px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 50%, var(--accent) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: titleSlideIn 0.8s ease-out 0.1s both;
+        }
+
+        .tagline {
+            font-size: 1.5em;
+            font-weight: 500;
+            color: var(--text-muted);
+            margin-bottom: 30px;
+            font-family: 'Space Mono', monospace;
+            animation: titleSlideIn 0.8s ease-out 0.2s both;
+            letter-spacing: 1px;
+        }
+
+        .sarcasm-box {
+            max-width: 650px;
+            margin: 0 auto;
+            padding: 25px 35px;
+            background: linear-gradient(135deg, rgba(0, 217, 255, 0.1), rgba(255, 0, 110, 0.05));
+            border: 2px solid rgba(0, 217, 255, 0.3);
+            border-radius: 12px;
+            font-style: italic;
+            color: var(--primary);
+            font-size: 1.1em;
+            position: relative;
+            overflow: hidden;
+            animation: titleSlideIn 0.8s ease-out 0.3s both;
+        }
+
+        @keyframes titleSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes headerFadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* Content Grid */
+        .content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .section {
+            background: rgba(26, 31, 58, 0.6);
+            backdrop-filter: blur(20px);
+            border: 2px solid rgba(0, 217, 255, 0.2);
+            border-radius: 16px;
+            padding: 40px;
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            position: relative;
+            overflow: hidden;
+            animation: sectionFadeIn 0.8s ease-out forwards;
+        }
+
+        .section:hover {
+            border-color: rgba(0, 217, 255, 0.5);
+            background: rgba(26, 31, 58, 0.9);
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .section:nth-child(1) {
+            animation-delay: 0.1s;
+        }
+
+        .section:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        @keyframes sectionFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .section h2 {
+            font-size: 1.8em;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: var(--primary);
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+
+        .section-icon {
+            font-size: 1.6em;
+            display: inline-block;
+            animation: iconBounce 2s ease-in-out infinite;
+        }
+
+        @keyframes iconBounce {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-5px);
+            }
+        }
+
+        /* Bio Section */
+        .bio-text {
+            color: var(--text-muted);
+            line-height: 1.8;
+            font-size: 1.05em;
+        }
+
+        .bio-text strong {
+            color: var(--secondary);
+            font-weight: 600;
+        }
+
+        /* Hobbies List */
+        .hobbies-list {
+            list-style: none;
+        }
+
+        .hobbies-list li {
+            padding: 15px 0 15px 35px;
+            border-bottom: 1px solid rgba(0, 217, 255, 0.1);
+            color: var(--text-muted);
+            position: relative;
+            font-size: 1.05em;
+            transition: all 0.3s ease;
+        }
+
+        .hobbies-list li:last-child {
+            border-bottom: none;
+        }
+
+        .hobbies-list li::before {
+            content: "▸";
+            position: absolute;
+            left: 0;
+            color: var(--secondary);
+            font-weight: bold;
+            font-size: 1.3em;
+        }
+
+        .hobbies-list li:hover {
+            color: var(--text);
+            padding-left: 45px;
+            text-shadow: 0 0 20px rgba(0, 217, 255, 0.3);
+        }
+
+        /* Social Links */
+        .socials {
+            display: flex;
+            gap: 15px;
+            margin-top: 35px;
+        }
+
+        .social-btn {
+            flex: 1;
+            padding: 16px;
+            background: linear-gradient(135deg, rgba(0, 217, 255, 0.1), rgba(131, 56, 236, 0.1));
+            border: 2px solid rgba(0, 217, 255, 0.3);
+            color: var(--primary);
+            text-decoration: none;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 1em;
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            cursor: pointer;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            font-family: 'Space Grotesk', sans-serif;
+        }
+
+        .social-btn:hover {
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: var(--dark);
+            border-color: var(--primary);
+            transform: translateY(-4px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .social-btn.secondary {
+            background: linear-gradient(135deg, rgba(255, 0, 110, 0.1), rgba(131, 56, 236, 0.1));
+            border-color: rgba(255, 0, 110, 0.3);
+            color: var(--secondary);
+        }
+
+        .social-btn.secondary:hover {
+            background: linear-gradient(135deg, var(--secondary), var(--accent));
+            color: white;
+            border-color: var(--secondary);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Quote Section */
+        .quote-section {
+            grid-column: 1 / -1;
+            background: linear-gradient(135deg, rgba(131, 56, 236, 0.1), rgba(255, 0, 110, 0.05));
+            backdrop-filter: blur(20px);
+            border: 2px solid rgba(131, 56, 236, 0.3);
+            border-radius: 16px;
+            padding: 45px;
+            position: relative;
+            overflow: hidden;
+            animation: sectionFadeIn 0.8s ease-out 0.3s both;
+        }
+
+        .quote-section::after {
+            content: '"';
+            position: absolute;
+            top: -30px;
+            right: 20px;
+            font-size: 200px;
+            color: rgba(131, 56, 236, 0.1);
+            font-weight: 700;
+            pointer-events: none;
+        }
+
+        .quote {
+            font-size: 1.4em;
+            font-style: italic;
+            color: var(--accent);
+            margin-bottom: 20px;
+            line-height: 1.7;
+            position: relative;
+            z-index: 1;
+        }
+
+        .quote-author {
+            color: var(--text-muted);
+            font-size: 1em;
+            text-align: right;
+            font-weight: 500;
+        }
+
+        /* Tech Stack */
+        .stack {
+            grid-column: 1 / -1;
+        }
+
+        .stack h2 {
+            margin-bottom: 30px;
+        }
+
+        .tech-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+            gap: 18px;
+        }
+
+        .tech-item {
+            background: linear-gradient(135deg, rgba(0, 217, 255, 0.1), rgba(131, 56, 236, 0.05));
+            border: 2px solid rgba(0, 217, 255, 0.3);
+            padding: 25px;
+            border-radius: 12px;
+            text-align: center;
+            font-weight: 600;
+            color: var(--primary);
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            cursor: default;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .tech-item:hover {
+            background: linear-gradient(135deg, rgba(0, 217, 255, 0.2), rgba(131, 56, 236, 0.15));
+            border-color: rgba(0, 217, 255, 0.6);
+            transform: translateY(-6px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+            color: var(--text);
+        }
+
+        /* Easter egg */
+        .easter-egg {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--secondary), var(--accent));
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8em;
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            z-index: 100;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .easter-egg:hover {
+            transform: scale(1.15) rotate(10deg);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+        }
+
+        .easter-egg:active {
+            transform: scale(0.95) rotate(-10deg);
+        }
+
+        /* Notification */
+        .notification {
+            position: fixed;
+            bottom: 110px;
+            right: 30px;
+            background: linear-gradient(135deg, var(--secondary), var(--accent));
+            color: white;
+            padding: 16px 25px;
+            border-radius: 10px;
+            font-weight: 600;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+            z-index: 99;
+            font-family: 'Space Mono', monospace;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .notification.show {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                padding: 50px 20px;
+            }
+
+            .content {
+                grid-template-columns: 1fr;
+                gap: 25px;
+            }
+
+            h1 {
+                font-size: 2.5em;
+            }
+
+            .tagline {
+                font-size: 1.2em;
+            }
+
+            .profile-wrapper {
+                width: 130px;
+                height: 130px;
+            }
+
+            .profile-pic {
+                width: 130px;
+                height: 130px;
+            }
+
+            .section {
+                padding: 30px;
+            }
+
+            .tech-grid {
+                grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+            }
+
+            .sarcasm-box {
+                font-size: 1em;
+                padding: 20px 25px;
+            }
+
+            .easter-egg {
+                width: 55px;
+                height: 55px;
+                font-size: 1.5em;
+                bottom: 20px;
+                right: 20px;
+            }
+
+            .notification {
+                bottom: 90px;
+                right: 20px;
+                font-size: 0.9em;
+            }
+        }
+
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 1.8em;
+            }
+
+            .section h2 {
+                font-size: 1.3em;
+            }
+
+            .socials {
+                flex-direction: column;
+            }
+
+            .tech-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
 </head>
 <body>
-    <p> click button and you get free robux!  </p
-<button style="background-color: blue;" type="button"></button>
-<button type="button" onclick="alert('congratulations! you just got 0 robux! now leave.')">free robux</button>
-    
-    
-    <p> some useless links I guess </p>
- 
-    <a href="https://github.com/revx0012/revx0012.github.io" target="_blank">
-    
-       
-        <button style="
- background-color: rgb(6, 6, 6);
- color: rgb(240, 243, 246);
-                                        
-"
-               >
-         My Repositories
-        </button>
-    </a>
+    <div class="bg-grid"></div>
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
 
-<p>My other stupid website projects</p>
+    <div class="container">
+        <header>
+            <div class="profile-wrapper">
+                <div class="profile-pic">
+                    <img src="image.png" alt="revx155 - a cougar on a mission">
+                </div>
+            </div>
+            <h1>revx155</h1>
+            <p class="tagline">code. sleep. goof.</p>
+            <p class="sarcasm-box">"im eating a brick in the middle of summer" <span style="color: var(--text-muted);">- random Chinese old man from the street</span></p>
+        </header>
 
-<a href="https://revx0012.github.io/bananacat" target="_blank">
+        <div class="content">
+            <!-- bio stuff -->
+            <div class="section">
+                <h2><span class="section-icon">💻</span>About</h2>
+                <p class="bio-text">
+                    Beginner dev learning to actually understand code (no shame using AI to learn faster). 
+                    Obsessed with <strong>clean code</strong>, <strong>smooth animations</strong>, and breaking things "for science". 
+                    Sarcasm is my native language so sorry if I'm extra in conversations, it's just how I'm wired.
+                </p>
+                <p class="bio-text" style="margin-top: 15px;">
+                    When not coding or animating, I'm either suffering through <strong>Geometry Dash</strong>, building chaotic creations in <strong>Minecraft</strong>, or goofing around until I find something funny.
+                </p>
+                <div class="socials">
+                    <a href="https://www.youtube.com/@revx144" class="social-btn" target="_blank">YouTube</a>
+                    <a href="https://github.com/revx0012" class="social-btn secondary" target="_blank">GitHub</a>
+                </div>
+            </div>
 
+            <!-- bad hobbies -->
+            <div class="section">
+                <h2><span class="section-icon">🎮</span>Hobbies</h2>
+                <ul class="hobbies-list">
+                    <li>Code (lovely but also painful)</li>
+                    <li>Sleeping (maybe too much, im way too tired.)</li>
+                    <li>Geometry Dash (masochism is a hobby)</li>
+                    <li>Minecraft (nuke the whole world with mods)</li>
+                    <li>Goofing Around (overrated skill)</li>
+                    <li>Breaking Things (testing, totally. right?)</li>
+                </ul>
+            </div>
 
-        <button style="
-background-color: #ffff00;
-color: rgb(240, 243, 246);
+            <!-- Quote Section -->
+            <div class="quote-section">
+                <p class="quote">
+                    sometimes bro u gotta lock in, trust me.
+                </p>
+                <p class="quote-author">~ revx155</p>
+            </div>
 
-"
-               >
-         Banana Cat
-        </button>
-    </a>
+            <!-- Tech Stack -->
+            <div class="section stack">
+                <h2><span class="section-icon">⚙️</span>Currently Working With</h2>
+                <div class="tech-grid">
+                    <div class="tech-item">Python</div>
+                    <div class="tech-item">Bash</div>
+                    <div class="tech-item">HTML</div>
+                    <div class="tech-item">CSS</div>
+                    <div class="tech-item">JavaScript</div>
+                </div>
+            </div>
+        </div>
+    </div>
 
+    <!-- Easter Egg -->
+    <div class="easter-egg" id="easterEgg">🐱</div>
+    <div class="notification" id="notification"></div>
 
+    <script>
+        // Easter egg interaction
+        const easterEgg = document.getElementById('easterEgg');
+        const notification = document.getElementById('notification');
+        let clicks = 0;
 
-    
-    <form action="https://haste.powercord.dev/qituwotude">
-        <button type="submit">‎</button>
-        
-       <p>‎</p>
-    <a href="https://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=&cad=rja&uact=8&ved=2ahUKEwjB4_3M-uT9AhUsTaQEHcAEAhgQtwJ6BAgJEAI&url=https%3A%2F%2Fwww.youtube.com%2Fwatch%3Fv%3DxvFZjo5PgG0&usg=AOvVaw1bR_FN-SnfIGtKD3fjAA5P"</a>
- <img src="https://static.wikia.nocookie.net/dbxfanon/images/c/cc/The_Impostor.png/revision/latest?cb=20201223005217"
-width="6" 
-     height="8" />
-        
-        
-  <div id="player"></div>
+        const messages = [
+            "haha, you found the easter egg! respect.",
+            "stop clicking, you're making me dizzy",
+            "okay, that's enough fr fr",
+            "STOP ITTTT",
+            "alright you win. (no you didnt)",
+            "you're as stupid as me, huh?",
+            "i respect the dedication ngl",
+            "whats the point of doing this",
+            "this is awkward now...",
+            "okay seriously now go touch grass"
+        ];
 
-  <script src="https://www.youtube.com/iframe_api"></script>
-  <script>
-    var player;
+        easterEgg.addEventListener('click', (e) => {
+            clicks++;
+            if (clicks <= messages.length) {
+                notification.textContent = messages[clicks - 1];
+                notification.classList.add('show');
+                easterEgg.style.transform = `rotate(${clicks * 30}deg) scale(${1 + clicks * 0.03})`;
+                
+                setTimeout(() => {
+                    notification.classList.remove('show');
+                }, 3000);
 
-    function onYouTubeIframeAPIReady() {
-      player = new YT.Player('player', {
-        height: '360',
-        width: '640',
-        videoId: 'm5zi9tKD81U', // Replace 'VIDEO_ID' with the actual YouTube video ID
-        playerVars: {
-          autoplay: 1,       // Set to 1 for autoplay
-          controls: 0,       // Set to 0 to hide controls
-          modestbranding: 1, // Set to 1 to hide YouTube logo
-          rel: 0,            // Set to 0 to hide related videos at the end
-          showinfo: 0,       // Set to 0 to hide video title and uploader info
-          iv_load_policy: 3, // Set to 1 to show annotations
-          disablekb: 1       // Set to 1 to disable keyboard controls
+                createClickParticles(e.clientX, e.clientY);
+            }
+        });
+
+        // weird blob
+        const blobs = document.querySelectorAll('.blob');
+        document.addEventListener('mousemove', (e) => {
+            blobs.forEach((blob, index) => {
+                const speed = (index + 1) * 80;
+                blob.style.transform = `translate(${e.clientX / speed}px, ${e.clientY / speed}px)`;
+            });
+        });
+
+        // click particles
+        function createClickParticles(x, y) {
+            for (let i = 0; i < 5; i++) {
+                const particle = document.createElement('div');
+                particle.style.position = 'fixed';
+                particle.style.left = x + 'px';
+                particle.style.top = y + 'px';
+                particle.style.width = '10px';
+                particle.style.height = '10px';
+                particle.style.background = ['#00d9ff', '#ff006e', '#8338ec'][Math.floor(Math.random() * 3)];
+                particle.style.borderRadius = '50%';
+                particle.style.pointerEvents = 'none';
+                particle.style.zIndex = '99';
+                document.body.appendChild(particle);
+
+                const angle = (Math.PI * 2 * i) / 5;
+                const velocity = 3 + Math.random() * 3;
+                const vx = Math.cos(angle) * velocity;
+                const vy = Math.sin(angle) * velocity;
+                let px = x;
+                let py = y;
+                let life = 1;
+
+                const animate = () => {
+                    life -= 0.02;
+                    px += vx;
+                    py += vy;
+                    particle.style.left = px + 'px';
+                    particle.style.top = py + 'px';
+                    particle.style.opacity = life;
+
+                    if (life > 0) {
+                        requestAnimationFrame(animate);
+                    } else {
+                        particle.remove();
+                    }
+                };
+                animate();
+            }
         }
-      });
-    }
 
-    function playVideo() {
-      player.playVideo();
-    }
-  </script>
-        
+        // smooth scroll because why not
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+
+        // extra
+        easterEgg.addEventListener('contextmenu', (e) => {
+            e.preventDefault();
+            notification.textContent = "right click? really? you're bold.";
+            notification.classList.add('show');
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 2000);
+        });
+    </script>
 </body>
 </html>
