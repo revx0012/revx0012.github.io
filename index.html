@@ -1,853 +1,130 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>revx155 - code. sleep. goof.</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        :root {
-            --primary: #00d9ff;
-            --secondary: #ff006e;
-            --accent: #8338ec;
-            --dark: #0a0e27;
-            --darker: #050812;
-            --surface: #1a1f3a;
-            --surface-light: #252d4a;
-            --text: #f0f3ff;
-            --text-muted: #a8adc5;
-            --success: #06ffa5;
-        }
-
-        html {
-            scroll-behavior: smooth;
-        }
-
-        body {
-            font-family: 'Space Grotesk', sans-serif;
-            background: linear-gradient(135deg, var(--darker) 0%, var(--dark) 50%, #0f1527 100%);
-            color: var(--text);
-            min-height: 100vh;
-            position: relative;
-            overflow-x: hidden;
-            line-height: 1.6;
-        }
-
-        /* Animated background grid - optimized */
-        .bg-grid {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 0;
-            pointer-events: none;
-            background-image: 
-                linear-gradient(0deg, transparent 24%, rgba(0, 217, 255, 0.05) 25%, rgba(0, 217, 255, 0.05) 26%, transparent 27%, transparent 74%, rgba(0, 217, 255, 0.05) 75%, rgba(0, 217, 255, 0.05) 76%, transparent 77%, transparent),
-                linear-gradient(90deg, transparent 24%, rgba(0, 217, 255, 0.05) 25%, rgba(0, 217, 255, 0.05) 26%, transparent 27%, transparent 74%, rgba(0, 217, 255, 0.05) 75%, rgba(0, 217, 255, 0.05) 76%, transparent 77%, transparent);
-            background-size: 50px 50px;
-            opacity: 0.3;
-            will-change: transform;
-            animation: gridShift 30s linear infinite;
-        }
-
-        @keyframes gridShift {
-            0% {
-                transform: translateY(0);
-            }
-            100% {
-                transform: translateY(50px);
-            }
-        }
-
-        /* Animated blobs - optimized */
-        .blob {
-            position: absolute;
-            opacity: 0.12;
-            mix-blend-mode: screen;
-            border-radius: 50%;
-            filter: blur(80px);
-            z-index: 0;
-            will-change: transform;
-        }
-
-        .blob-1 {
-            width: 500px;
-            height: 500px;
-            background: var(--primary);
-            top: -250px;
-            left: -250px;
-            animation: blobFloat 18s ease-in-out infinite;
-        }
-
-        .blob-2 {
-            width: 400px;
-            height: 400px;
-            background: var(--secondary);
-            bottom: -200px;
-            right: -200px;
-            animation: blobFloat 22s ease-in-out infinite reverse;
-        }
-
-        .blob-3 {
-            width: 350px;
-            height: 350px;
-            background: var(--accent);
-            top: 50%;
-            left: 10%;
-            animation: blobFloat 25s ease-in-out infinite;
-        }
-
-        @keyframes blobFloat {
-            0%, 100% {
-                transform: translate(0, 0);
-            }
-            33% {
-                transform: translate(30px, -50px);
-            }
-            66% {
-                transform: translate(-20px, 30px);
-            }
-        }
-
-        .container {
-            position: relative;
-            z-index: 1;
-            max-width: 1000px;
-            margin: 0 auto;
-            padding: 80px 30px;
-        }
-
-        /* Header */
-        header {
-            text-align: center;
-            margin-bottom: 100px;
-            animation: headerFadeIn 0.8s ease-out;
-        }
-
-        .profile-wrapper {
-            position: relative;
-            width: 160px;
-            height: 160px;
-            margin: 0 auto 40px;
-        }
-
-        .profile-pic {
-            width: 160px;
-            height: 160px;
-            border-radius: 20px;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            padding: 4px;
-            box-shadow: 0 10px 30px rgba(0, 217, 255, 0.2);
-            position: relative;
-            will-change: transform;
-            animation: profileSpin 5s linear infinite;
-        }
-
-        .profile-pic img {
-            width: 100%;
-            height: 100%;
-            border-radius: 16px;
-            object-fit: cover;
-            display: block;
-        }
-
-        @keyframes profileSpin {
-            0% {
-                transform: rotate(0deg);
-            }
-            100% {
-                transform: rotate(360deg);
-            }
-        }
-
-        h1 {
-            font-size: 4em;
-            font-weight: 700;
-            margin-bottom: 15px;
-            letter-spacing: -2px;
-            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 50%, var(--accent) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            animation: titleSlideIn 0.8s ease-out 0.1s both;
-        }
-
-        .tagline {
-            font-size: 1.5em;
-            font-weight: 500;
-            color: var(--text-muted);
-            margin-bottom: 30px;
-            font-family: 'Space Mono', monospace;
-            animation: titleSlideIn 0.8s ease-out 0.2s both;
-            letter-spacing: 1px;
-        }
-
-        .sarcasm-box {
-            max-width: 650px;
-            margin: 0 auto;
-            padding: 25px 35px;
-            background: linear-gradient(135deg, rgba(0, 217, 255, 0.1), rgba(255, 0, 110, 0.05));
-            border: 2px solid rgba(0, 217, 255, 0.3);
-            border-radius: 12px;
-            font-style: italic;
-            color: var(--primary);
-            font-size: 1.1em;
-            position: relative;
-            overflow: hidden;
-            animation: titleSlideIn 0.8s ease-out 0.3s both;
-        }
-
-        @keyframes titleSlideIn {
-            from {
-                opacity: 0;
-                transform: translateY(-20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes headerFadeIn {
-            from {
-                opacity: 0;
-            }
-            to {
-                opacity: 1;
-            }
-        }
-
-        /* Content Grid */
-        .content {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 30px;
-            margin-bottom: 40px;
-        }
-
-        .section {
-            background: rgba(26, 31, 58, 0.6);
-            border: 2px solid rgba(0, 217, 255, 0.2);
-            border-radius: 16px;
-            padding: 40px;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-            animation: sectionFadeIn 0.8s ease-out forwards;
-        }
-
-        .section:hover {
-            border-color: rgba(0, 217, 255, 0.5);
-            background: rgba(26, 31, 58, 0.9);
-            transform: translateY(-4px);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
-        }
-
-        .section:nth-child(1) {
-            animation-delay: 0.1s;
-        }
-
-        .section:nth-child(2) {
-            animation-delay: 0.2s;
-        }
-
-        @keyframes sectionFadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .section h2 {
-            font-size: 1.8em;
-            margin-bottom: 25px;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            color: var(--primary);
-            font-weight: 700;
-            letter-spacing: -0.5px;
-        }
-
-        .section-icon {
-            font-size: 1.6em;
-            display: inline-block;
-            animation: iconBounce 2.5s ease-in-out infinite;
-        }
-
-        @keyframes iconBounce {
-            0%, 100% {
-                transform: translateY(0);
-            }
-            50% {
-                transform: translateY(-4px);
-            }
-        }
-
-        /* Bio Section */
-        .bio-text {
-            color: var(--text-muted);
-            line-height: 1.8;
-            font-size: 1.05em;
-        }
-
-        .bio-text strong {
-            color: var(--secondary);
-            font-weight: 600;
-        }
-
-        /* Hobbies List */
-        .hobbies-list {
-            list-style: none;
-        }
-
-        .hobbies-list li {
-            padding: 15px 0 15px 35px;
-            border-bottom: 1px solid rgba(0, 217, 255, 0.1);
-            color: var(--text-muted);
-            position: relative;
-            font-size: 1.05em;
-            transition: all 0.2s ease;
-        }
-
-        .hobbies-list li:last-child {
-            border-bottom: none;
-        }
-
-        .hobbies-list li::before {
-            content: "▸";
-            position: absolute;
-            left: 0;
-            color: var(--secondary);
-            font-weight: bold;
-            font-size: 1.3em;
-        }
-
-        .hobbies-list li:hover {
-            color: var(--text);
-            padding-left: 40px;
-        }
-
-        /* Social Links */
-        .socials {
-            display: flex;
-            gap: 15px;
-            margin-top: 35px;
-        }
-
-        .social-btn {
-            flex: 1;
-            padding: 16px;
-            background: linear-gradient(135deg, rgba(0, 217, 255, 0.1), rgba(131, 56, 236, 0.1));
-            border: 2px solid rgba(0, 217, 255, 0.3);
-            color: var(--primary);
-            text-decoration: none;
-            border-radius: 12px;
-            font-weight: 600;
-            font-size: 1em;
-            transition: all 0.25s ease;
-            cursor: pointer;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-            font-family: 'Space Grotesk', sans-serif;
-        }
-
-        .social-btn:hover {
-            background: linear-gradient(135deg, var(--primary), var(--accent));
-            color: var(--dark);
-            border-color: var(--primary);
-            transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
-        }
-
-        .social-btn.secondary {
-            background: linear-gradient(135deg, rgba(255, 0, 110, 0.1), rgba(131, 56, 236, 0.1));
-            border-color: rgba(255, 0, 110, 0.3);
-            color: var(--secondary);
-        }
-
-        .social-btn.secondary:hover {
-            background: linear-gradient(135deg, var(--secondary), var(--accent));
-            color: white;
-            border-color: var(--secondary);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
-        }
-
-        /* Quote Section */
-        .quote-section {
-            grid-column: 1 / -1;
-            background: linear-gradient(135deg, rgba(131, 56, 236, 0.1), rgba(255, 0, 110, 0.05));
-            border: 2px solid rgba(131, 56, 236, 0.3);
-            border-radius: 16px;
-            padding: 45px;
-            position: relative;
-            overflow: hidden;
-            animation: sectionFadeIn 0.8s ease-out 0.3s both;
-        }
-
-        .quote-section::after {
-            content: '"';
-            position: absolute;
-            top: -30px;
-            right: 20px;
-            font-size: 200px;
-            color: rgba(131, 56, 236, 0.1);
-            font-weight: 700;
-            pointer-events: none;
-        }
-
-        .quote {
-            font-size: 1.4em;
-            font-style: italic;
-            color: var(--accent);
-            margin-bottom: 20px;
-            line-height: 1.7;
-            position: relative;
-            z-index: 1;
-        }
-
-        .quote-author {
-            color: var(--text-muted);
-            font-size: 1em;
-            text-align: right;
-            font-weight: 500;
-        }
-
-        /* Tech Stack */
-        .stack {
-            grid-column: 1 / -1;
-        }
-
-        .stack h2 {
-            margin-bottom: 30px;
-        }
-
-        .tech-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
-            gap: 18px;
-        }
-
-        .tech-item {
-            background: linear-gradient(135deg, rgba(0, 217, 255, 0.1), rgba(131, 56, 236, 0.05));
-            border: 2px solid rgba(0, 217, 255, 0.3);
-            padding: 25px;
-            border-radius: 12px;
-            text-align: center;
-            font-weight: 600;
-            color: var(--primary);
-            transition: all 0.25s ease;
-            cursor: default;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .tech-item:hover {
-            background: linear-gradient(135deg, rgba(0, 217, 255, 0.2), rgba(131, 56, 236, 0.15));
-            border-color: rgba(0, 217, 255, 0.6);
-            transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
-            color: var(--text);
-        }
-
-        /* shit */
-        .easter-egg {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            width: 60px;
-            height: 60px;
-            background: linear-gradient(135deg, var(--secondary), var(--accent));
-            border-radius: 50%;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.8em;
-            transition: all 0.2s ease;
-            z-index: 100;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-            border: 2px solid rgba(255, 255, 255, 0.2);
-            will-change: transform;
-        }
-
-        .easter-egg:hover {
-            transform: scale(1.1);
-            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.25);
-        }
-
-        .easter-egg:active {
-            transform: scale(0.95);
-        }
-
-        /* Notification */
-        .notification {
-            position: fixed;
-            bottom: 110px;
-            right: 30px;
-            background: linear-gradient(135deg, var(--secondary), var(--accent));
-            color: white;
-            padding: 16px 25px;
-            border-radius: 10px;
-            font-weight: 600;
-            opacity: 0;
-            transition: opacity 0.25s ease;
-            pointer-events: none;
-            z-index: 99;
-            font-family: 'Space Mono', monospace;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-        }
-
-        .notification.show {
-            opacity: 1;
-            pointer-events: all;
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            .container {
-                padding: 40px 20px;
-            }
-
-            .content {
-                grid-template-columns: 1fr;
-                gap: 20px;
-            }
-
-            h1 {
-                font-size: 2.5em;
-            }
-
-            .tagline {
-                font-size: 1.2em;
-            }
-
-            .profile-wrapper {
-                width: 130px;
-                height: 130px;
-            }
-
-            .profile-pic {
-                width: 130px;
-                height: 130px;
-            }
-
-            .section {
-                padding: 25px 20px;
-            }
-
-            .tech-grid {
-                grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-            }
-
-            .sarcasm-box {
-                font-size: 1em;
-                padding: 18px 22px;
-            }
-
-            .easter-egg {
-                width: 55px;
-                height: 55px;
-                font-size: 1.5em;
-                bottom: 20px;
-                right: 20px;
-            }
-
-            .notification {
-                bottom: 85px;
-                right: 20px;
-                font-size: 0.9em;
-                padding: 14px 20px;
-            }
-
-            /* disable some animations on mobile */
-            .bg-grid {
-                animation: none;
-                opacity: 0.15;
-            }
-
-            .profile-pic {
-                animation: none;
-            }
-
-            .section-icon {
-                animation: none;
-            }
-
-            header {
-                margin-bottom: 60px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .container {
-                padding: 30px 15px;
-            }
-
-            h1 {
-                font-size: 1.8em;
-                margin-bottom: 10px;
-            }
-
-            .tagline {
-                font-size: 1em;
-                margin-bottom: 15px;
-            }
-
-            .section h2 {
-                font-size: 1.3em;
-                margin-bottom: 15px;
-            }
-
-            .section {
-                padding: 20px 15px;
-            }
-
-            .socials {
-                flex-direction: column;
-                gap: 10px;
-            }
-
-            .tech-grid {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 12px;
-            }
-
-            .tech-item {
-                padding: 18px;
-                font-size: 0.95em;
-            }
-
-            .sarcasm-box {
-                font-size: 0.95em;
-                padding: 15px 18px;
-            }
-
-            .quote {
-                font-size: 1.1em;
-            }
-
-            header {
-                margin-bottom: 40px;
-            }
-        }
-
-        /* Disable animations for users who prefer reduced motion */
-        @media (prefers-reduced-motion: reduce) {
-            * {
-                animation: none !important;
-                transition: none !important;
-            }
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="description" content="revx155 terminal page with live shell, games, and monero support.">
+  <title>revx155 | terminal</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700;800&family=Press+Start+2P&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="bg-grid"></div>
-    <div class="blob blob-1"></div>
-    <div class="blob blob-2"></div>
-    <div class="blob blob-3"></div>
-
-    <div class="container">
-        <header>
-            <div class="profile-wrapper">
-                <div class="profile-pic">
-                    <img src="image.png" alt="revx155 - a cougar on a mission">
-                </div>
-            </div>
-            <h1>revx155</h1>
-            <p class="tagline">code. sleep. goof.</p>
-            <p class="sarcasm-box">"im eating a brick in the middle of summer" <span style="color: var(--text-muted);">- random Chinese old man from the street</span></p>
-        </header>
-
-        <div class="content">
-            <!-- bio stuff -->
-            <div class="section">
-                <h2><span class="section-icon">💻</span>About</h2>
-                <p class="bio-text">
-                    Beginner dev learning to actually understand code (no shame using AI to learn faster). 
-                    Obsessed with <strong>clean code</strong>, <strong>sleeping</strong>, and breaking things "for science". 
-                    Sarcasm is my native language so sorry if I'm extra in conversations, it's just how I'm wired.
-                </p>
-                <p class="bio-text" style="margin-top: 15px;">
-                    When not coding or something, I'm either just playing <strong>Geometry Dash</strong>, playing random servers in <strong>Minecraft</strong>, or goofing around until I find something funny or sleep.
-                </p>
-                <div class="socials">
-                    <a href="https://www.youtube.com/@revx144" class="social-btn" target="_blank">YouTube</a>
-                    <a href="https://github.com/revx0012" class="social-btn secondary" target="_blank">GitHub</a>
-                </div>
-            </div>
-
-            <!-- bad hobbies -->
-            <div class="section">
-                <h2><span class="section-icon">🎮</span>Hobbies</h2>
-                <ul class="hobbies-list">
-                    <li>Code (lovely but also painful)</li>
-                    <li>Sleeping (maybe too much, im way too tired.)</li>
-                    <li>Geometry Dash (masochism is a hobby)</li>
-                    <li>Minecraft (nuke the whole world with mods)</li>
-                    <li>Goofing Around (overrated skill)</li>
-                    <li>Breaking Things (testing, totally. right?)</li>
-                </ul>
-            </div>
-
-            <!-- quote section -->
-            <div class="quote-section">
-                <p class="quote">
-                    sometimes bro u gotta lock in, trust me.
-                </p>
-                <p class="quote-author">~ revx155</p>
-            </div>
-
-            <!-- tech stack which im clearly bad at -->
-            <div class="section stack">
-                <h2><span class="section-icon">⚙️</span>Currently Working With</h2>
-                <div class="tech-grid">
-                    <div class="tech-item">Python</div>
-                    <div class="tech-item">Bash</div>
-                    <div class="tech-item">HTML</div>
-                    <div class="tech-item">CSS</div>
-                    <div class="tech-item">JavaScript</div>
-                </div>
-            </div>
+  <div class="desktop" id="desktop">
+    <main class="terminal-window" aria-label="terminal profile">
+      <header class="titlebar">
+        <div class="win-controls" aria-label="window actions">
+          <button class="ctrl close" id="btnChaos" type="button" aria-label="close (chaos)">x</button>
+          <button class="ctrl min" id="btnVideo" type="button" aria-label="minimize (video)">-</button>
+          <button class="ctrl max" id="btnCall" type="button" aria-label="maximize (call)">+</button>
         </div>
+        <p class="title">revx@baghdad: ~/profile-shell</p>
+        <span class="status-pill" id="statusMode">online</span>
+      </header>
+
+      <div class="terminal-body">
+        <aside class="side-col" aria-label="profile info">
+          <section class="profile-box">
+            <figure class="avatar">
+              <img src="files/image.webp" alt="profile picture of revx155">
+            </figure>
+            <div class="identity">
+              <h1 id="displayName" data-scramble>revx155</h1>
+              <p>based in iraq. building random stuff, breaking random stuff, then fixing it. sorry if i joke too much.</p>
+              <p>i sleep at 1am or 12pm, depends if i have school or not.</p>
+              <p>favorite youtubers: endermanch, bringus studios, and so on...</p>
+              <div class="chip-list">
+                <span class="chip">discord: @ron144</span>
+                <span class="chip">code. sleep. goof.</span>
+              </div>
+            </div>
+          </section>
+
+          <section class="link-grid" aria-label="social links">
+            <a class="btn" href="https://www.youtube.com/@revx144" target="_blank" rel="noopener noreferrer">youtube</a>
+            <a class="btn" href="https://github.com/revx0012" target="_blank" rel="noopener noreferrer">github</a>
+            <a class="btn" href="https://tiktok.com/@revx144" target="_blank" rel="noopener noreferrer">tiktok</a>
+          </section>
+        </aside>
+
+        <section class="main-col" aria-label="terminal content">
+          <article class="section">
+            <h2 data-scramble>session</h2>
+            <div class="shell-feed" id="liveShell" aria-live="polite"></div>
+          </article>
+
+          <article class="section">
+            <h2 data-scramble>fav games</h2>
+            <ul class="games">
+              <li>gd <span>(geometry dash)</span></li>
+              <li>mc <span>(minecraft)</span></li>
+              <li>roblox <span>(not much)</span></li>
+              <li>tiktok <span>(not a game, still funny)</span></li>
+              <li>henry stickmin</li>
+              <li>among us</li>
+              <li>ace attorney <span>(do not play it a lot, still epic)</span></li>
+              <li>...others idk</li>
+            </ul>
+          </article>
+
+          <article class="section">
+            <h2 data-scramble>monero support</h2>
+            <p class="output">xmr only.</p>
+            <div class="xmr-wrap">
+              <div class="xmr-row">
+                <code class="xmr" id="xmrAddress">49pRWjoggsafDsoXHsmNApBiqnBmfKVyJPnX3dUiLtTp96xFjSvBXK9RWsi6WQ4XXp1CCe3XBzpLpH3tUVmXsr1t2tT1U2U</code>
+                <button class="copy" id="copyXmr" type="button">copy</button>
+              </div>
+              <p class="copy-note" id="copyNote">no wallet drama. monero only.</p>
+            </div>
+          </article>
+        </section>
+      </div>
+    </main>
+  </div>
+
+  <div class="video-overlay hidden" id="videoOverlay" aria-hidden="true">
+    <video id="hurrVideo" src="files/hurr.mp4" playsinline preload="auto"></video>
+  </div>
+
+  <div class="call-overlay hidden" id="callOverlay" aria-hidden="true">
+    <div class="call-card incoming" id="incomingCard">
+      <p class="call-title">sans is calling you, answer or hang up?</p>
+      <div class="call-actions">
+        <button class="call-btn answer" id="answerCall" type="button">answer</button>
+        <button class="call-btn hang" id="hangCall" type="button">hang up</button>
+      </div>
+      <p class="call-sub" id="callSub">incoming call...</p>
     </div>
 
-    <!-- some stuff here and and and idk -->
-    <div class="easter-egg" id="easterEgg">🐱</div>
-    <div class="notification" id="notification"></div>
+    <div class="call-card convo hidden" id="convoCard">
+      <p class="ut-name">sans</p>
+      <div class="ut-box">
+        <p id="utText"></p>
+        <span class="ut-cursor"></span>
+      </div>
+    </div>
 
-    <script>
-        // mobile get less free will
-        const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-        const isTablet = window.innerWidth <= 1024 && window.innerWidth > 480;
+    <div class="whiteout" id="whiteout"></div>
+  </div>
 
-        // secret
-        const easterEgg = document.getElementById('easterEgg');
-        const notification = document.getElementById('notification');
-        let clicks = 0;
+  <canvas class="chaos-canvas" id="chaosCanvas" aria-hidden="true"></canvas>
+  <div class="chaos-lines" id="chaosLines" aria-hidden="true"></div>
+  <div class="chaos-glyph" id="chaosGlyph" aria-hidden="true"></div>
+  <div class="chaos-log" id="chaosLog" aria-hidden="true"></div>
+  <div class="chaos-eye" id="chaosEye" aria-hidden="true"></div>
 
-        const messages = [
-            "haha, you found the easter egg! respect.",
-            "stop clicking, you're making me dizzy",
-            "okay, that's enough fr fr",
-            "STOP ITTTT",
-            "alright you win. (no you didnt)",
-            "you're as stupid as me, huh?",
-            "i respect the dedication ngl",
-            "whats the point of doing this",
-            "this is awkward now...",
-            "okay seriously now go touch grass",
-            "ok what now"
-        ];
+  <aside class="henry" id="henryFix" aria-live="polite">
+    <img src="files/Henry_Stickmin.webp" alt="henry stickmin">
+    <p>"dont worry i fixed the site youre all good)"</p>
+  </aside>
 
-        easterEgg.addEventListener('click', (e) => {
-            clicks++;
-            if (clicks <= messages.length) {
-                notification.textContent = messages[clicks - 1];
-                notification.classList.add('show');
-                
-                // simple scale animation instead of rotate for performance
-                easterEgg.style.transform = `scale(${1 + clicks * 0.02})`;
-                
-                setTimeout(() => {
-                    notification.classList.remove('show');
-                }, 2500);
+  <audio id="audioCall" src="files/call.wav" preload="auto"></audio>
+  <audio id="audioBg" src="files/bg.m4a" preload="auto"></audio>
+  <audio id="audioTalk" src="files/talk.m4a" preload="auto"></audio>
+  <audio id="audioExit" src="files/exit.m4a" preload="auto"></audio>
 
-                if (!isMobile && !isTablet) {
-                    createClickParticles(e.clientX, e.clientY);
-                }
-            }
-        });
-
-        // blob interaction (disabled on mobile)
-        if (!isMobile && !isTablet) {
-            let lastX = 0;
-            let lastY = 0;
-            let ticking = false;
-            const blobs = document.querySelectorAll('.blob');
-
-            document.addEventListener('mousemove', (e) => {
-                lastX = e.clientX;
-                lastY = e.clientY;
-                
-                if (!ticking) {
-                    window.requestAnimationFrame(() => {
-                        blobs.forEach((blob, index) => {
-                            const speed = (index + 1) * 100;
-                            blob.style.transform = `translate(${lastX / speed}px, ${lastY / speed}px)`;
-                        });
-                        ticking = false;
-                    });
-                    ticking = true;
-                }
-            });
-        }
-
-        // click particles
-        function createClickParticles(x, y) {
-            const particleCount = 3; // reduced from 5 for performance
-            for (let i = 0; i < particleCount; i++) {
-                const particle = document.createElement('div');
-                particle.style.position = 'fixed';
-                particle.style.left = x + 'px';
-                particle.style.top = y + 'px';
-                particle.style.width = '8px';
-                particle.style.height = '8px';
-                particle.style.background = ['#00d9ff', '#ff006e', '#8338ec'][Math.floor(Math.random() * 3)];
-                particle.style.borderRadius = '50%';
-                particle.style.pointerEvents = 'none';
-                particle.style.zIndex = '99';
-                document.body.appendChild(particle);
-
-                const angle = (Math.PI * 2 * i) / particleCount;
-                const velocity = 2.5 + Math.random() * 2;
-                const vx = Math.cos(angle) * velocity;
-                const vy = Math.sin(angle) * velocity;
-                let px = x;
-                let py = y;
-                let life = 1;
-
-                const animate = () => {
-                    life -= 0.03;
-                    px += vx;
-                    py += vy;
-                    particle.style.left = px + 'px';
-                    particle.style.top = py + 'px';
-                    particle.style.opacity = life;
-
-                    if (life > 0) {
-                        requestAnimationFrame(animate);
-                    } else {
-                        particle.remove();
-                    }
-                };
-                animate();
-            }
-        }
-
-        // wow
-        easterEgg.addEventListener('contextmenu', (e) => {
-            e.preventDefault();
-            notification.textContent = "right click? really? you're bold.";
-            notification.classList.add('show');
-            setTimeout(() => {
-                notification.classList.remove('show');
-            }, 1800);
-        });
-    </script>
+  <script src="app.js"></script>
 </body>
 </html>
